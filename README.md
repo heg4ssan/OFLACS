@@ -8,8 +8,25 @@ En el primer avance, se ha implementado lo siguiente:
 - Función `sortQuality`, que itera sobre todos los archivos y guarda en un vector la información sobre la calidad de la música (frecuencia de muestreo y tasa de bits), al igual que el nombre de la canción. Esto permite imprimir en consola una lista de todas las pistas de la carpeta ordenadas por calidad (de mayor a menor), junto con su respectiva información técnica.
 - Función `main`, la cual le solicita al usuario la ruta de su carpeta de música para poder utilizar las funciones mencionadas anteriormente.
 
-## Dependencias del sistema: 
-El proyecto requiere tener instalada la biblioteca `TagLib` en el sistema para compilar y funcionar correctamente. 
+## Dependencias del sistema (IMPORTANTE): 
+El proyecto requiere tener instalada la biblioteca `TagLib` en el sistema para compilar y funcionar correctamente.
+
+### Instrucciones para compilar el avance de proyecto
+Ejecuta el siguiente comando en la terminal:
+```
+g++ main.cpp $(pkg-config --cflags --libs taglib) -o OFLACS
+```
+
+### Instrucciones para ejecutar el avance de proyecto
+Ejecuta el siguiente comando en la terminal:
+```./OFLACS```
+
+### Descripción de las entradas del avance de proyecto
+El programa recibirá como entrada un string de la ruta de la carpeta donde está guardada la biblioteca de música en la computadora.
+
+### Descripción de las salidas del avance de proyecto 
+- Opción 1 `songNames`: Lista de todos los nombres de las canciones guardadas en la carpeta de música (SIN ORDENAR).
+- Opción 2 `sortQuality`: Lista de las canciones ordenadas de mayor a menor calidad, con sus datos técnicos (frecuencia de muestreo y tasa de bits).
 
 ## Cumplimiento de sub-competencias
 ### SICT0301: Evalúa los componentes
@@ -22,3 +39,7 @@ Como se mencionó anteriormente, en el proyecto complemento el uso de la funció
 Hago uso del `sort()` default de C++ por dos razones principales:
 - Facilidad de implementación: por ser una función nativa del lenguaje, se implementa de manera sencilla y evita la necesidad de programar un algoritmo propio.
 - Eficiencia y rapidez: como mencioné anteriormente, la función `sort()` trabaja híbridamente. Al usar el algoritmo Quicksort como principal y Heapsort como secundario, asegura un tiempo de ejecución en el peor de los casos de `O(N log N)`.
+
+## [Video del funcionamiento del programa.](https://youtu.be/bzDzcjOnROs)
+
+
