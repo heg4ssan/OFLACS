@@ -11,20 +11,20 @@ En el primer avance, se ha implementado lo siguiente:
 ## Dependencias del sistema (IMPORTANTE): 
 El proyecto requiere tener instalada la biblioteca `TagLib` en el sistema para compilar y funcionar correctamente.
 
-### Instrucciones para compilar el avance de proyecto
+## Instrucciones para compilar el avance de proyecto
 Ejecuta el siguiente comando en la terminal:
 ```
 g++ main.cpp $(pkg-config --cflags --libs taglib) -o OFLACS
 ```
 
-### Instrucciones para ejecutar el avance de proyecto
+## Instrucciones para ejecutar el avance de proyecto
 Ejecuta el siguiente comando en la terminal:
 ```./OFLACS```
 
-### Descripción de las entradas del avance de proyecto
+## Descripción de las entradas del avance de proyecto
 El programa recibirá como entrada un string de la ruta de la carpeta donde está guardada la biblioteca de música en la computadora.
 
-### Descripción de las salidas del avance de proyecto 
+## Descripción de las salidas del avance de proyecto 
 - Opción 1 `songNames`: Lista de todos los nombres de las canciones guardadas en la carpeta de música (SIN ORDENAR).
 - Opción 2 `sortQuality`: Lista de las canciones ordenadas de mayor a menor calidad, con sus datos técnicos (frecuencia de muestreo y tasa de bits).
 
