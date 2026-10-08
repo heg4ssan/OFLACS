@@ -47,6 +47,8 @@ Así que en general, el tiempo de complejidad en el mejor, medio y peor caso de 
 
 Por lo que para aislar un solo tiempo de complejidad para cada caso en Introsort, depende de cómo visualicemos el algoritmo, en este caso se asumirá que Introsort no tiene conocimiento de cuántos elementos va a ordenar, así que sus tiempos de complejidad recaen en Insertion Sort, ya que el peor caso sería que tocaran pocos elementos y su tiempo de complejidad proporcional a esos elementos serán los de Insertion Sort:
 
+| Algoritmo | Mejor Caso | Caso Medio | Peor Caso |
+| :--- | :---: | :---: | :---: |
 | **IntroSort** | O(N) | O(N^2) | O(N^2) |
 
 Si se ve desde la perspectiva de que el tiempo de complejidad para tan pocos elementos es insignificante, se pueden tomar el tiempo de complejidad fijo de O(N log N), pero para la visión de este proyecto, aunque 16 elementos son pocos, su peor complejidad teórica usando Insertion Sort seguirá siendo O(N^2), y por lo mismo consideraremos los tiempos de complejidad de Insertion Sort para IntroSort.
