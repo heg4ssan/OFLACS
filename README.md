@@ -31,15 +31,31 @@ El programa recibirá como entrada un string de la ruta de la carpeta donde est�
 ## Cumplimiento de sub-competencias
 ### SICT0301: Evalúa los componentes
 #### Análisis de Complejidad  
-En la función `sortQuality` hago uso del sort() default de C++, este con la implementación de una función lambda para cambiar el criterio de ordenación, que por defecto es de menor a mayor. El sort default de C++ usa un algoritmo llamado introsort (Introspective Sort), el cual en realidad es un tipo de algoritmo híbrido entre otros 3. Primero usa Quicksort, el cual en un caso promedio es uno de los algoritmos más rápidos, su problema radica en que si los datos están puestos de la peor manera posible, su tiempo de complejidad se vuelve `O(N²)`. El introsort se encarga de detectar si durante el quicksort hay demasiadas ejecuciones, cambie a Heapsort, el cual tiene garantizado un tiempo de ejecución `O(N log N)` en su peor caso. Para finalizar, introsort usa Insertion Sort cuando ya se dividió la lista original en partes muy pequeñas por su eficiencia. Todo esto se resume a que introsort tendrá como peor caso un tiempo de ejecución `O(N log N)`, y como consecuencia también la función por defecto de sort() en C++. 
+En la función `sortQuality` hago uso del sort() default de C++, este con la implementación de una función lambda para cambiar el criterio de ordenación, que por defecto es de menor a mayor. El sort default de C++ usa un algoritmo llamado introsort (Introspective Sort), el cual en realidad es un híbrido entre otros 3: Quicksort, Heapsort e Insertion Sort. Para hacer el análisis de complejidad primero analizaré cómo funciona el algoritmo en sí.
+
+| Algoritmo | Mejor Caso | Caso Medio | Peor Caso |
+| :--- | :---: | :---: | :---: |
+| **Quicksort** | O(N log N) | O(N log N) | O(N^2) |
+| **Heapsort** | O(N log N) | O(N log N) | O(N log N) |
+| **Insertion Sort** | O(N) | O(N^2) | O(N^2) |
+
+Introsort primero analiza cuántos elementos va a ordenar, si esta cantidad de elementos es mayor a 16, introsort va a entrar con quicksort, el cual como vemos en la tabla anterior tiene un mejor caso y caso medio de O(N log N). Introsort dependiendo el número de elementos a ordenar coloca un límite de profundidad (iteraciones), si el algoritmo que empezó con Quicksort supera este límite de profundidad, para evitar que quicksort pase a su peor caso, el algoritmo pasa a usar Heapsort, el cual asegura como mejor, medio y peor caso O(N log N), y para finalizar, cuando el algoritmo ya sea de Quicksort o Heapsort tiene particiones de 16 elementos aproximadamente, usa Insertion sort para ordenar estas partes.
+
+Ahora, si la cantidad de elementos a ordenar desde un inicio es menor a 16, el algoritmo utiliza exclusivamente Insertion Sort, el cual tiene como peor caso O(N^2).
+
+Así que en general, el tiempo de complejidad en el mejor, medio y peor caso de introsort recae en la cantidad de elementos que vaya a ordenar. Si se están ordenando miles de elementos, introsort asegura siempre un tiempo de complejidad de O(N log N). Si se están ordenando pocos elementos, el tiempo de complejidad de introsort en el mejor, medio y peor caso serán los mismos que Insertion sort, ya que es el algoritmo que se usa.
+
+Por lo que para aislar un solo tiempo de complejidad para cada caso en Introsort, depende de cómo visualicemos el algoritmo, en este caso se asumirá que Introsort no tiene conocimiento de cuántos elementos va a ordenar, así que sus tiempos de complejidad recaen en Insertion Sort, ya que el peor caso sería que tocaran pocos elementos y su tiempo de complejidad proporcional a esos elementos serán los de Insertion Sort:
+
+| **IntroSort** | O(N) | O(N^2) | O(N^2) |
+
+Si se ve desde la perspectiva de que el tiempo de complejidad para tan pocos elementos es insignificante, se pueden tomar el tiempo de complejidad fijo de O(N log N), pero para la visión de este proyecto, aunque 16 elementos son pocos, su peor complejidad teórica usando Insertion Sort seguirá siendo O(N^2), y por lo mismo consideraremos los tiempos de complejidad de Insertion Sort para IntroSort.
 
 Como se mencionó anteriormente, en el proyecto complemento el uso de la función sort() con una función lambda, la cual uso para cambiar el criterio de ordenación ya que hago uso de un vector y tupla para una matriz, donde los primeros dos elementos de cada fila son números y son los elementos a considerar (frecuencia de muestreo y tasa de bits). La función lambda se basa en que si encuentra dos números iguales en el primer elemento de la fila, este pasa a comparar los segundos elementos de la fila. Y de igual manera lo hace de mayor a menor, logrando ordenar la música de mayor calidad a menor calidad. Cabe recalcar que la función lambda no afecta el tiempo de complejidad, ya que los métodos funcionan de la misma manera.
-
 ### SICT0302: Toma decisiones
 Hago uso del `sort()` default de C++ por dos razones principales:
 - Facilidad de implementación: por ser una función nativa del lenguaje, se implementa de manera sencilla y evita la necesidad de programar un algoritmo propio.
-- Eficiencia y rapidez: como mencioné anteriormente, la función `sort()` trabaja híbridamente. Al usar el algoritmo Quicksort como principal y Heapsort como secundario, asegura un tiempo de ejecución en el peor de los casos de `O(N log N)`.
-
+- Eficiencia y rapidez: como mencioné anteriormente, la función `sort()` trabaja híbridamente. Lo cual hace que, dependiendo del caso específico al que se enfrente, cambie su manera de actuar.
 ## [Video del funcionamiento del programa.](https://youtu.be/bzDzcjOnROs)
 
 
