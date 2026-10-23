@@ -1,5 +1,6 @@
 // Autor: Hector Gassan
-// 23/09/2026
+
+#include "dlist.h" // Lista doblemente ligada implementada por mi
 #include <algorithm>
 #include <filesystem>
 #include <iostream>
@@ -139,7 +140,7 @@ void songArtistsAlbums(
 // https://stackoverflow.com/questions/6486289/how-to-clear-the-console-in-c
 void clearScreen() {
   // \033[2J clears the screen, \033[H moves the cursor to the top-left corner
-  std::cout << "\033[2J\033[H" << std::flush;
+  cout << "\033[2J\033[H" << flush;
 }
 
 // Funcion que imprime OFLACS en grande
@@ -153,12 +154,16 @@ void printOFLACS() {
 }
 
 int main() {
-  // Main basico para comprobar funcionalidad de las dos funciones anteriores.
+  // Main para comprobar funcionalidad de las dos funciones anteriores.
   clearScreen();
   cout << "Welcome to:" << endl;
   printOFLACS();
   bool flag = true;
   string rutacarp;
+  // Creo la estructura de datos a utilizar para la lista de canciones
+  // favoritas.
+  DList<string> Fsongs;
+  Fsongs.loadFromFile("favoritos.txt");
   cout << "Enter the directory extension of your FLAC library:" << endl;
   getline(cin, rutacarp);
   while (flag == true) {
@@ -167,7 +172,11 @@ int main() {
          << "Option 1: Song Names\n"
          << "Option 2: Sort songs quality\n"
          << "Option 3: See artists and albums\n"
-         << "Option 4: Exit\n"
+         << "Option 4: Add favorite song\n"
+         << "Option 5: See favorite songs\n"
+         << "Option 6: Delete favorite song\n"
+         << "Option 7: Update favorite song\n"
+         << "Option 8: Exit\n"
          << endl;
     cin >> option;
     clearScreen();
@@ -178,6 +187,41 @@ int main() {
     } else if (option == 3) {
       songArtistsAlbums(rutacarp);
     } else if (option == 4) {
+      cin.ignore();
+      cout << "Enter the song name:" << endl;
+      string nSong;
+      getline(cin, nSong);
+      cout << "Enter the author name:" << endl;
+      string aSong;
+      getline(cin, aSong);
+      string songInfo = nSong + " - " + aSong;
+      Fsongs.insertion(songInfo);
+    } else if (option == 5) {
+      Fsongs.printList();
+    } else if (option == 6) {
+      cout << "Select the song number of the favorite songs list that you want "
+              "to delete:"
+           << endl;
+      int pos;
+      cin >> pos;
+      Fsongs.deleteAt(pos - 1);
+    } else if (option == 7) {
+      cout << "Select the song number of the favorite songs list that you want "
+              "to update:"
+           << endl;
+      int pos;
+      cin >> pos;
+      cout << "Enter the updated song name:" << endl;
+      cin.ignore();
+      string nSong;
+      getline(cin, nSong);
+      cout << "Enter the updated author name:" << endl;
+      string aSong;
+      getline(cin, aSong);
+      string songInfo = nSong + " - " + aSong;
+      Fsongs.update(pos - 1, songInfo);
+    } else if (option == 8) {
+      Fsongs.saveToFile("favoritos.txt");
       flag = false;
     } else {
       cout << "That option does not exist, chose a real one." << endl;
