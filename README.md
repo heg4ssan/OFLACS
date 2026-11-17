@@ -106,7 +106,7 @@ En el proyecto implementé la estructura de datos lista doblemente encadenada, d
 - `Borrado`: Esto porque hace uso de un ciclo for para poder recorrer desde head hasta la posición del elemento que se quiere eliminar, por lo que solo tendría O(1) en lugar de O(N) en el caso de que le tocara el primer elemento.
 
 - `Impresión`: Esto porque usa un ciclo while el cual siempre recorre absolutamente toda la lista desde head hasta encontrar un puntero null, imprimiendo todos los elementos.
-- 
+
 #### Análisis de Complejidad - PROGRAMA COMPLETO
 Para el análisis de complejidad del programa completo, tanto en el código de la estructura de datos como en el `main`, fui función por función y línea por línea. En cada línea se calculó el tiempo de ejecución y, tomando el tiempo mayor, se dictaminó una complejidad general para cada función. 
 
