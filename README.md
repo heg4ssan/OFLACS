@@ -19,6 +19,17 @@ En el segundo avance, se ha implementado lo siguiente:
 - Se agregaron mejoras estéticas como una función para imprimir el título en grande al inicio del programa y otra para limpiar la pantalla. 
 - Se agregó una función complementaria que muestra el artista y álbum de cada canción (sin ordenar).
 
+## Descripción del avance 3
+En el tercer avance, se ha implementado lo siguiente:
+- Implementación del método `searchString` en la estructura de datos (lista doblemente ligada), el cual se utiliza en el `main` como un buscador de canciones.
+
+### Cambios sobre el segundo avance
+Se mejoró la usabilidad del programa mediante los siguientes puntos:
+
+- Se eliminó la opción de ordenar por calidad y la opción de mostrar nombres por separado para unificarlas en una sola función. Ahora, esta función muestra toda la información de cada canción (nombre, artista y datos técnicos) ya ordenada por calidad por defecto.
+
+- Se reemplazó la opción de modificar canciones favoritas manualmente por un sistema más eficiente. Ahora, al iniciar el programa, todo el catálogo de canciones se carga en una lista doblemente ligada. Para agregar una canción a favoritos, el usuario simplemente selecciona el número de la canción en la lista y todos sus datos se copian automáticamente. Así, el programa ya no es susceptible a errores por parte del usuario. Este cambio se complementa con la nueva función de buscar canción (`searchString`), ya que el buscador te muestra los números de las canciones encontradas, permitiéndote usar esos números para agregarlas rápidamente a tu lista de favoritos.
+
 ## Dependencias del sistema (IMPORTANTE): 
 El proyecto requiere tener instalada la biblioteca `TagLib` en el sistema para compilar y funcionar correctamente.
 
@@ -34,12 +45,21 @@ Ejecuta el siguiente comando en la terminal:
 
 ## Descripción de las entradas del avance de proyecto
 El programa recibirá como entrada un string de la ruta de la carpeta donde está guardada la biblioteca de música en la computadora.
+- Opción 3 `Add favorite song`: Programa recibe número de canción a agregar en la lista de canciones favoritas.
+
+- Opción 5 `Delete favorite`: Recibe número de canción de la lista de canciones favoritas que se quiere eliminar de la lista.
+
+- Opción 6 `Search song`: Recibe string del nombre de la canción que se va a buscar en la lista de canciones que da la opción 1.
+
 
 ## Descripción de las salidas del avance de proyecto 
-- Opción 1 `songNames`: Lista de todos los nombres de las canciones guardadas en la carpeta de música (SIN ORDENAR).
-- Opción 2 `sortQuality`: Lista de las canciones ordenadas de mayor a menor calidad, con sus datos técnicos (frecuencia de muestreo y tasa de bits).
-- Opción 3 `songArtistsAlbums`: Lista de los artistas y álbum de cada canción (SIN ORDENAR).
-- Opción 5: Imprime la lista de las canciones favoritas del usuario que haya agregado, modificado o borrado con el uso de las opciones 4, 6 y 7.
+- Opción 1 `Songs`: Lista del nombre, artista e información técnica (frecuencia de muestreo y tasa de bits) de todas las canciones, ordenadas por calidad.
+
+- Opción 2 `Songs albums`: Lista del nombre y álbum de cada canción, de igual manera ordenadas por calidad.
+
+- Opción 4 `See favorite songs`: Imprime la lista de las canciones favoritas del usuario que haya agregado o borrado con las opciones 3 y 5.
+
+- Opción 6 `Search Song`: Lista del número, nombre, artista e información técnica (frecuencia de muestreo y tasa de bits) de la o las canciones que hayan coincidido con la búsqueda.
 
 
 ## Cumplimiento de sub-competencias
@@ -70,25 +90,90 @@ Si se ve desde la perspectiva de que el tiempo de complejidad para tan pocos ele
 Como se mencionó anteriormente, en el proyecto complemento el uso de la función sort() con una función lambda, la cual uso para cambiar el criterio de ordenación ya que hago uso de un vector y tupla para una matriz, donde los primeros dos elementos de cada fila son números y son los elementos a considerar (frecuencia de muestreo y tasa de bits). La función lambda se basa en que si encuentra dos números iguales en el primer elemento de la fila, este pasa a comparar los segundos elementos de la fila. Y de igual manera lo hace de mayor a menor, logrando ordenar la música de mayor calidad a menor calidad. Cabe recalcar que la función lambda no afecta el tiempo de complejidad, ya que los métodos funcionan de la misma manera.
 
 #### Análisis de Complejidad - ESTRUCTURA DE DATOS 
-En el proyecto implementé la estructura de datos lista doblemente encadenada, donde uso tres métodos principales: inserción, modificación y borrado. La inserción para agregar canciones a la lista de canciones favoritas, la modificación para actualizar alguna canción existente en la base de datos y el borrado para borrar definitivamente la canción de la lista. Al igual que un método que recorre toda la lista para imprimirla. El tiempo de complejidad por cada uno de estos métodos es el siguiente:
-- `Inserción`: O(1) -- Esto porque el método usa el apuntador tail para poner el nuevo elemento directamente al final de la lista sin tener que recorrer ningún elemento.
-- `Modificación`: O(N) -- Esto porque hace uso de un ciclo for para poder avanzar desde head hasta la posición del elemento que se quiere modificar -- El tiempo de complejidad de modificar el primer elemento toma un tiempo constante O(1), pero esto no cambia el hecho de que su peor caso y más probable es un O(N).
-- `Borrado`: O(N) -- De igual manera hace uso de un ciclo for para poder recorrer desde head hasta la posición del elemento que se quiere eliminar -- Al igual que en la modificación, el tiempo de complejidad de borrar el primer elemento toma un tiempo constante O(1), pero su peor caso y caso promedio siguen siendo O(N).
-- `Impresión`: O(N) -- Esto porque usa un ciclo while el cual siempre recorre absolutamente toda la lista desde head hasta encontrar un puntero null, imprimiendo todos los elementos.
+En el proyecto implementé la estructura de datos lista doblemente encadenada, donde uso tres métodos principales: inserción, búsqueda y borrado. La inserción para agregar canciones a la lista de canciones favoritas, la búsqueda para buscar un elemento con su posición y el borrado para borrar definitivamente la canción de la lista. Al igual que un método que recorre toda la lista para imprimirla. Los tiempos de complejidad por cada uno de estos métodos según mi implementación son los siguientes:
+
+| Método | Mejor Caso | Caso Promedio | Peor Caso |
+| :--- | :---: | :---: | :---: |
+| **Inserción (`insertion`)** | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Búsqueda (`searchPos`)** | $O(1)$ | $O(N)$ | $O(N)$ |
+| **Borrado (`deleteAt`)** | $O(1)$ | $O(N)$ | $O(N)$ |
+| **Impresión (`printList`)** | $O(N)$ | $O(N)$ | $O(N)$ |
+
+- `Inserción`: Esto porque el método usa el apuntador tail para poner el nuevo elemento directamente al final de la lista sin tener que recorrer ningún elemento.
+
+- `Búsqueda`: Esto porque hace uso de un ciclo for para poder recorrer desde head hasta la posición del elemento que se quiere buscar, por lo que solo tendría O(1) en lugar de O(N) en el caso de que le tocara el primer elemento.
+
+- `Borrado`: Esto porque hace uso de un ciclo for para poder recorrer desde head hasta la posición del elemento que se quiere eliminar, por lo que solo tendría O(1) en lugar de O(N) en el caso de que le tocara el primer elemento.
+
+- `Impresión`: Esto porque usa un ciclo while el cual siempre recorre absolutamente toda la lista desde head hasta encontrar un puntero null, imprimiendo todos los elementos.
+- 
+#### Análisis de Complejidad - PROGRAMA COMPLETO
+Para el análisis de complejidad del programa completo, tanto en el código de la estructura de datos como en el `main`, fui función por función y línea por línea. En cada línea se calculó el tiempo de ejecución y, tomando el tiempo mayor, se dictaminó una complejidad general para cada función. 
+
+Existen funciones con tiempo de complejidad variable (mejor, promedio y peor caso) debido a que internamente invocan algoritmos cuyo rendimiento depende del acomodo de los datos, como por ejemplo el `sort` en la función `sortQuality`. Estos tiempos de complejidad se heredan a la función que los contiene, tomando también en cuenta cómo interactúan con las complejidades del resto del código.
+
+**Nota:** El análisis línea por línea se encuentra en los comentarios del `main` y de la estructura de datos.
+
+##### `dlist.h` (Estructura de Datos)
+
+| Función / Método | Complejidad General |
+| :--- | :--- |
+| `DLink(T val)` | $O(1)$ - Constante |
+| `DLink(T val, DLink<T> *nxt, DLink<T> *prev)` | $O(1)$ - Constante |
+| `DList()` | $O(1)$ - Constante |
+| `~DList()` | $O(1)$ - Constante |
+| `searchString(string val)` | Mejor $O(1)$, Promedio $O(N)$, Peor $O(N)$ |
+| `insertion(T val)` | $O(1)$ - Constante |
+| `searchPos(int pos)` | Mejor $O(1)$, Promedio $O(N)$, Peor $O(N)$ |
+| `deleteAt(int pos)` | Mejor $O(1)$, Promedio $O(N)$, Peor $O(N)$ |
+| `printList()` | $O(N)$ - Lineal |
+| `saveToFile(string filename) const` | $O(N)$ - Lineal |
+| `loadFromFile(string filename)` | $O(N)$ - Lineal |
+
+<br>
+
+##### `main.cpp` (Programa Principal)
+
+| Función | Complejidad General |
+| :--- | :--- |
+| `sortQuality(string rutacarp, DList<string> &SongsInfo)` | Mejor $O(N)$, Promedio $O(N^2)$, Peor $O(N^2)$ |
+| `songAlbums(string rutacarp)` | Mejor $O(N)$, Promedio $O(N^2)$, Peor $O(N^2)$ |
+| `clearScreen()` | $O(1)$ - Constante |
+| `printOFLACS()` | $O(1)$ - Constante |
+| `main()` | Mejor $O(N)$, Promedio $O(N^2)$, Peor $O(N^2)$ |
+
+Como conclusión, tenemos que el programa en su totalidad (es decir, la función `main`) tiene los siguientes tiempos de complejidad:
+| Función | Complejidad General |
+| :--- | :--- |
+| Complejidad final del programa (`main()`) | Mejor $O(N)$, Promedio $O(N^2)$, Peor $O(N^2)$ |
+
 
 ### SICT0302: Toma decisiones
 #### Algoritmo de ordenamiento
-Hago uso del `sort()` default de C++ por dos razones principales:
-- Facilidad de implementación: por ser una función nativa del lenguaje, se implementa de manera sencilla y evita la necesidad de programar un algoritmo propio.
-- Eficiencia y rapidez: como mencioné anteriormente, la función `sort()` trabaja híbridamente. Lo cual hace que, dependiendo del caso específico al que se enfrente, cambie su manera de actuar.
+Para el ordenamiento de las canciones por calidad de audio, tomé la decisión de implementar la función `std::sort()` de la librería estándar de C++ basándome en lo siguiente:
+
+Como mencioné en el análisis de complejidad, a pequeña escala, aproximadamente en menos de 16 elementos, el sort común de C++ tiene la misma complejidad de Insertion Sort, pero esto cambia bastante si hablamos a gran escala, ya que si sorteamos cientos o miles de elementos se asegura siempre un tiempo de complejidad de $O(N \log N)$. En cambio, si hubiera implementado algoritmos como Bubble Sort, Selection Sort o un Insertion Sort puro, a gran escala estos seguirían con peor y promedio caso de $O(N^2)$. Si el usuario intenta cargar una biblioteca con 10,000 canciones, resultaría en tiempos de carga demasiado largos.
+
+Usando el sort de C++, estoy cubriendo a los usuarios con la escalabilidad de un tiempo de complejidad $O(N \log N)$ si cargan miles de archivos de música, la naturaleza del algoritmo híbrido de introsort ofrece el rendimiento necesario para todos los casos.
+
 #### Estructura de datos
 La razón principal del uso de una lista doblemente encadenada es que, al querer implementar la opción de que el usuario pueda tener una lista de sus canciones favoritas guardada y poder consultarla, esta lista de canciones favoritas tiene un orden lineal y cronológico perfecto para usar justamente una lista, donde el método de inserción tiene un tiempo de complejidad de O(1), y el uso de una lista doblemente encadenada en lugar de una simple está enfocado a tener la mejor opción posible por si en un futuro decido implementar navegación o algún otro método.
 
+**Comparándolo a un árbol:**
+Usé la lista por la conveniencia lineal que mencioné anteriormente, una estructura de datos de naturaleza no lineal no tiene sentido en el uso que le quiero dar a la estructura, el cual es una lista lineal de canciones favoritas.
+
+**Comparándolo a una fila:**
+La abstracción de *first in first out* no tiene sentido en el uso que le quiero dar a la estructura porque no se está buscando que la primera canción en entrar a la lista sea la primera en salir, se está buscando poder eliminar posiciones no específicas.
+
 ### SICT0303: Implementa acciones científicas
 #### Método de consulta
-Para consultar la información de la estructura de datos, estoy haciendo uso de una simple función en mi implementación de la lista doblemente encadenada, la cual solamente recorre la lista de inicio a fin haciendo uso de un ciclo while el cual imprime la información que tiene cada nodo, esto acompañado de numeración para saber el número de la canción en la lista, donde al requerir la posición del nodo en la lista, solo se le resta uno a la numeración que muestra el programa.
+Para consultar la información de la estructura de datos, uso dos funciones en la implementación de la estructura de datos:
 
-#### Lectura de archivos para cargar datos
+- `printList`: El cual funciona para consultar toda la estructura de datos y la imprime.
+
+- `searchString`: El cual con la función find de string, compara el elemento de cada nodo a un string dado para ver si existen coincidencias, si existen se imprime el valor completo del nodo (string con información de la canción) y su número en la lista de canciones. Este se usa en el programa como buscador y es útil para encontrar canciones en la lista y saber qué número tienen para agregarla a la lista de favoritos o solo ver si existe la canción en la lista.
+
+#### Lectura y escritura de archivos para cargar y guardar datos
 Para que la estructura de datos se mantenga aunque se cierre el programa, estoy haciendo uso de un archivo txt `favoritos.txt`, esto mediante el uso de dos métodos clave de la implementación de la estructura de datos:
 - `saveToFile`: Este método recibe el nombre del archivo de texto en un string, donde con el uso de `fstream`, se usa ofstream para abrir el archivo en modo de escritura, una vez hecho esto, con el uso de un nodo prueba se recorre la lista completa, guardando los datos en el archivo con saltos de línea. 
 
@@ -97,6 +182,4 @@ Para que la estructura de datos se mantenga aunque se cierre el programa, estoy 
 Cabe recalcar que en `saveToFile`, si no existe el archivo antes de ejecutar el método, el sistema crea uno por defecto, donde en otra ejecución `loadFromFile` obtendrá los datos obtenidos durante la anterior ejecución del programa.
 Estos dos métodos se integran en el main de manera que al iniciar el programa, se ejecuta la función `loadFromFile`, de esta manera se cargan todos los datos en la lista doblemente encadenada para poder usarse durante la ejecución, donde antes de finalizar el programa se ejecuta `saveToFile`, donde se guardan los datos nuevos, actualizados o borrados.
 
-## [Video del funcionamiento del programa.](https://youtu.be/O6IJOm5X6_c)
-
-
+## [Video del funcionamiento del programa.](https://youtu.be/E0_LPOpYvKI)
