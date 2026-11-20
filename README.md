@@ -215,4 +215,4 @@ Estos dos métodos se integran en el main de manera que al iniciar el programa, 
 
 [Video 1: Algoritmo de ordenamiento](https://youtu.be/HO7V56X3ZbY?si=UyTw0Do7O_lMyYYb) \
 [Video 2: Estructura de datos lineal](https://youtu.be/5safSQHYHkI?si=_h0YoEwVxPJ1xjop) \
-[Video 3: Estructura de datos no lineal](https://youtu.be/z6HpMtYnWpw?si=Mi93O9p9VGKDzaz7) \
+[Video 3: Estructura de datos no lineal](https://youtu.be/z6HpMtYnWpw?si=Mi93O9p9VGKDzaz7)
